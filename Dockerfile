@@ -2,19 +2,13 @@ FROM python:3.6.8
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    curl \
-    software-properties-common \
-    git \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN git clone https://github.com/streamlit/streamlit-example.git .
-
+COPY requirements.txt ./
 RUN pip install -r requirements.txt
 
-EXPOSE 8501
+COPY . .
 
-HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
+RUN rm -f /etc/localtime \
+&& ln -sv /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+&& echo "Asia/Shanghai" > /etc/timezone
 
-ENTRYPOINT ["streamlit", "run", "streamlit_app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+ENTRYPOINT ["streamlit", "run", "form.py", "--server.port=8080", "--server.address=0.0.0.0"]
