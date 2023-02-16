@@ -7,4 +7,4 @@ RUN rm -f /etc/localtime \
 && ln -sv /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
 && echo "Asia/Shanghai" > /etc/timezone
 
-ENTRYPOINT ["streamlit", "run", "form.py", "--server.port 80"]
+ENTRYPOINT ["streamlit", "run", "form.py", "--server.port", "80"]
