@@ -40,13 +40,18 @@ class GptModel:
 
     @staticmethod
     def _render_main(config: Dict):
-        session = st.text_input('session', generate_str())
+        is_session = st.checkbox('Enable session')
+        if is_session:
+            session = st.text_input('session', generate_str())
+        else:
+            session = ''
+
         content = st.text_area("Please input", max_chars=512)
         if st.button("Submit"):
             start_message = st.empty()
             start_message.write("Parsing...")
             start_time = time.time()
-            answer = get_answer(text=content)
+            answer = get_answer(text=content, session=session, **config)
             end_time = time.time()
             start_message.write(f"Parse finished，it take{end_time - start_time}s")
             st.text_input("Answer", answer)
