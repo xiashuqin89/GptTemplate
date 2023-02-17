@@ -57,7 +57,7 @@ class GptModel:
             else:
                 st.text_area("Answer", 'parse error...')
             end_time = time.time()
-            start_message.write(f"Parse finished，it take{end_time - start_time}s")
+            start_message.write(f"Parse finished，it take {end_time - start_time}s")
         else:
             st.stop()
 
