@@ -16,9 +16,9 @@ def get_answer(**params):
             'bk_app_secret': BK_APP_SECRET
         }
     }
-    response = requests.get(URL, headers=headers, params=params)
+    response = requests.post(URL, headers=headers, json=params)
     try:
         payload = response.json()
         return payload.get('result')
     except json.JSONDecodeError:
-        return None
+        return 'parsing error...'
