@@ -53,9 +53,9 @@ class GptModel:
             start_time = time.time()
             answer = get_answer(text=content, session_id=session, model_config=config)
             if answer:
-                st.text_input("Answer", answer.get('result'))
+                st.text_area("Answer", answer.get('result'))
             else:
-                st.text_input("Answer", 'parse error...')
+                st.text_area("Answer", 'parse error...')
             end_time = time.time()
             start_message.write(f"Parse finished，it take{end_time - start_time}s")
         else:
