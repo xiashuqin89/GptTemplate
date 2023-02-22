@@ -9,8 +9,19 @@ from api import get_answer
 
 
 class GptModel:
-    @staticmethod
-    def _render_bar():
+    def _set_menu(self):
+        st.set_page_config(
+            page_title='BKCHAT GPT',
+            initial_sidebar_state="expanded",
+            menu_items={
+                'Get Help': 'https://bkchat.woa.com',
+                'Report a bug': 'https://bkchat.woa.com',
+                'About': 'https://bkchat.woa.com'
+            }
+        )
+
+    def _render_bar(self):
+        self._set_menu()
         st.markdown(
             """
             ## BKCHAT GPT
