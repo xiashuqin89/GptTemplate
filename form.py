@@ -19,14 +19,11 @@ class GptModel:
                 'About': 'https://bkchat.woa.com'
             }
         )
+        st.markdown("## BKCHAT GPT")
+        hide_footer()
 
     def _render_bar(self):
         self._set_menu()
-        st.markdown(
-            """
-            ## BKCHAT GPT
-            """
-        )
         st.sidebar.subheader("Config")
         model = st.sidebar.selectbox('model', ('text-davinci-003', 'text-davinci-002'))
 
@@ -79,6 +76,15 @@ class GptModel:
 
 def generate_str(num: int = 16) -> str:
     return ''.join(random.sample(string.ascii_letters + string.digits, num))
+
+
+def hide_footer():
+    hide_footer_style = """
+                <style>
+                footer {visibility: hidden;}
+                </style>
+                """
+    st.markdown(hide_footer_style, unsafe_allow_html=True)
 
 
 if __name__ == '__main__':
