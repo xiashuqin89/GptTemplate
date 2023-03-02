@@ -4,11 +4,18 @@ import string
 from typing import Dict
 
 import streamlit as st
+from streamlit_chat import message
 
 from api import get_answer
 
 
 class GptModel:
+    def __init__(self):
+        if 'generated' not in st.session_state:
+            st.session_state['generated'] = []
+        if 'past' not in st.session_state:
+            st.session_state['past'] = []
+
     def _set_menu(self):
         st.set_page_config(
             page_title='BKCHAT GPT',
@@ -54,20 +61,36 @@ class GptModel:
         else:
             session = ''
 
-        content = st.text_area("Please input", max_chars=512)
-        if st.button("Submit"):
+        content = st.text_input("Please input", max_chars=512)
+        col1, col2, *col = st.columns([1, 1, 7])
+        with col1:
+            submit = st.button("Submit")
+        with col2:
+            clear = st.button("Clear")
+
+        if clear:
+            st.session_state['past'] = []
+            st.session_state['generated'] = []
+
+        if submit:
+            st.session_state.past.append(content)
             start_message = st.empty()
             start_message.write("Parsing...")
             start_time = time.time()
             answer = get_answer(text=content, session_id=session, model_config=config)
             if answer:
-                st.text_area("Answer", answer.get('result'))
+                st.session_state.generated.append(answer.get('result'))
             else:
-                st.text_area("Answer", 'parse error...')
+                st.session_state.generated.append('parse error...')
             end_time = time.time()
             start_message.write(f"Parse finished，it take {end_time - start_time}s")
         else:
             st.stop()
+
+        if st.session_state['generated']:
+            for i in range(len(st.session_state['generated']) - 1, -1, -1):
+                message(st.session_state["generated"][i], key=str(i))
+                message(st.session_state['past'][i], is_user=True, key=str(i) + '_user')
 
     def render(self):
         config = self._render_bar()
