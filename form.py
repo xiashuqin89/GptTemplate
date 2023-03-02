@@ -62,7 +62,7 @@ class GptModel:
             session = ''
 
         content = st.text_input("Please input", max_chars=512)
-        col1, col2, *col = st.columns([1, 1, 7])
+        col1, col2, *col = st.columns([1, 1, 6])
         with col1:
             submit = st.button("Submit")
         with col2:
