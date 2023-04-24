@@ -77,7 +77,7 @@ class GptModel:
             start_message = st.empty()
             start_message.write("Parsing...")
             start_time = time.time()
-            answer = get_answer(text=content, session_id=session, model_config=config)
+            answer = get_answer(input_text=content, session_id=session, model_config=config)
             if answer:
                 st.session_state.generated.append(answer.get('result'))
             else:
