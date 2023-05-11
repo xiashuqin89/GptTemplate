@@ -32,7 +32,7 @@ class GptModel:
     def _render_bar(self):
         self._set_menu()
         st.sidebar.subheader("Config")
-        model = st.sidebar.selectbox('model', ('text-davinci-003', 'text-davinci-002'))
+        model = st.sidebar.selectbox('model', ('chat', 'ko2cn'))
 
         max_tokens = st.sidebar.slider("max_tokens", min_value=0, max_value=5000, value=2500)
         temperature = st.sidebar.number_input("temperature", min_value=0.0, max_value=1.0, value=0.9, step=0.1)
